@@ -3,7 +3,7 @@ export type ButtonProps = {
   text: string
 }
 
-export const Button = ({ onClick, text }: ButtonProps) => {
+export default ({ onClick, text }: ButtonProps) => {
   return (
     <button
       type="button"

@@ -2,8 +2,8 @@ import { GetServerSideProps } from "next"
 import { Session } from "next-auth"
 import { signOut, signIn } from "next-auth/react"
 import { getSession } from "next-auth/react"
-import { Button } from "../components/Button"
-import { Card } from "../components/Card"
+import Button from "../components/Button"
+import Card from "../components/Card"
 
 type IndexPageProps = {
   session: Session | null
@@ -25,7 +25,7 @@ export default function IndexPage({ session }: IndexPageProps) {
             Hashnode Roulette
           </h5>
           <Button
-            onClick={() => signIn("twitter")}
+            onClick={() => signIn("twitter", { callbackUrl: "/deck" })}
             text="Sign in with Twitter"
           />
         </Card>
