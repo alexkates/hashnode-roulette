@@ -46,33 +46,35 @@ export default function DeckPage() {
       {stories.map((story: Story, index: number) => (
         <TinderCard
           key={index}
-          className="absolute cursor-pointer max-w-md h-fit rounded overflow-hidden shadow-lg"
+          className="absolute cursor-pointer max-w-lg rounded shadow-lg"
           onSwipe={(direction: string) => {
             if (index === 0) {
               setPage(page + 1)
             }
           }}
         >
-          <img src={story.coverImage} className="w-full h-48" />
-          <div className="border-gray-400 bg-white rounded-b p-6 flex flex-col justify-between leading-normal">
-            <div className="mb-8">
-              <div className="text-gray-900 font-bold text-xl mb-2">
-                {story.title}
+          <div className="flex flex-col justify-center items-center">
+            <img className="w-full h-80" src={story.coverImage} />
+            <div className="border-gray-400 bg-white rounded-b p-6 flex flex-col justify-between leading-normal">
+              <div className="mb-8">
+                <div className="text-gray-900 font-bold text-2xl mb-2">
+                  {story.title}
+                </div>
+                <p className="text-gray-700 text-base text-ellipsis">
+                  {story.brief}
+                </p>
               </div>
-              <p className="text-gray-700 text-base">{story.brief}</p>
-            </div>
-            <div className="flex items-center">
-              <img
-                className="w-10 h-10 rounded-full mr-4"
-                src={story.author?.coverImage}
-              />
-              <div className="text-sm">
-                <p className="text-gray-900 leading-none">
-                  {story.author.username}
-                </p>
-                <p className="text-gray-600">
-                  {DateTime.fromISO(story.dateAdded).toFormat("LLL dd, yyyy")}
-                </p>
+              <div className="flex items-center">
+                <img
+                  className="w-12 h-12 rounded-full mr-2"
+                  src={story.author?.coverImage}
+                />
+                <div className="text-md">
+                  <p className="text-gray-900">{story.author.username}</p>
+                  <p className="text-gray-600">
+                    {DateTime.fromISO(story.dateAdded).toFormat("LLL dd, yyyy")}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
