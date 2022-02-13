@@ -42,7 +42,7 @@ export default function DeckPage() {
   if (error) return <p>Error ...</p>
 
   return (
-    <div className="flex justify-center h-screen items-center">
+    <div className="flex justify-center sm:mt-8">
       {stories.map((story: Story, index: number) => (
         <TinderCard
           key={index}
