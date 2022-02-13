@@ -51,6 +51,10 @@ export default function DeckPage() {
             if (index === 0) {
               setPage(page + 1)
             }
+
+            if (direction === "up") {
+              window.open(`https://hashnode.com/${story.slug}`, "_blank")
+            }
           }}
         >
           <div className="flex flex-col justify-center items-center">

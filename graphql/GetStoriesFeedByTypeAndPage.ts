@@ -12,6 +12,7 @@ export default gql`
       brief
       coverImage
       dateAdded
+      slug
       title
     }
   }

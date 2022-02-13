@@ -7,7 +7,7 @@ export default function NavbarMenu() {
   const session = useSession()
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className="relative inline-block text-left z-10">
       <div>
         <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
           <img
@@ -27,6 +27,17 @@ export default function NavbarMenu() {
       >
         <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="px-1 py-1">
+            <Menu.Item>
+              <Link href="/settings">
+                <a
+                  className={
+                    "text-gray-900 flex rounded-md items-center w-full px-2 py-2 text-sm"
+                  }
+                >
+                  Settings
+                </a>
+              </Link>
+            </Menu.Item>
             <Menu.Item>
               <Link href="/api/auth/signout">
                 <a
