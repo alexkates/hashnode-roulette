@@ -24,8 +24,7 @@ export default function Settings() {
       </label>
 
       <span className="font-light italic block text-center">
-        Hashnode Roulette never saves your API Key. It is stored in a cookie on
-        your device only.
+        Hashnode Roulette never saves your API Key.
       </span>
       <input
         type="submit"
