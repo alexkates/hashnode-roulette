@@ -7,10 +7,19 @@ import { useEffect, useState } from "react"
 
 import GetStoriesFeedByTypeAndPage from "../graphql/GetStoriesFeedByTypeAndPage"
 import { Story } from "../models/Story"
+import router from "next/router"
 
 export default function DeckPage() {
   const [page, setPage] = useState(0)
   const [stories, setStories] = useState([])
+
+  useEffect(() => {
+    const apiKey = localStorage.getItem("HASHNODE_API_KEY")
+
+    if (!apiKey) {
+      router.push("/settings")
+    }
+  }, [])
 
   const { loading, error, fetchMore } = useQuery(GetStoriesFeedByTypeAndPage, {
     variables: {
