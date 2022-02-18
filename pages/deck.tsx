@@ -2,12 +2,13 @@ import { DateTime } from "luxon"
 import { GetServerSideProps } from "next"
 import { getSession } from "next-auth/react"
 import TinderCard from "react-tinder-card"
-import { useQuery } from "@apollo/client"
+import { useMutation, useQuery } from "@apollo/client"
 import { useEffect, useState } from "react"
-
-import GetStoriesFeedByTypeAndPage from "../graphql/GetStoriesFeedByTypeAndPage"
-import { Story } from "../models/Story"
 import router from "next/router"
+
+import { Story } from "../models/Story"
+import GetStoriesFeedByTypeAndPageQuery from "../graphql/GetStoriesFeedByTypeAndPage"
+import ReactToStoryMutation from "../graphql/ReactToStory"
 
 export default function DeckPage() {
   const [page, setPage] = useState(0)
@@ -21,7 +22,11 @@ export default function DeckPage() {
     }
   }, [])
 
-  const { loading, error, fetchMore } = useQuery(GetStoriesFeedByTypeAndPage, {
+  const {
+    loading: storiesLoading,
+    error: storiesError,
+    fetchMore: fetchMoreStories,
+  } = useQuery(GetStoriesFeedByTypeAndPageQuery, {
     variables: {
       type: "NEW",
       page,
@@ -36,19 +41,28 @@ export default function DeckPage() {
     },
   })
 
+  const [
+    ReactToStory,
+    {
+      data: reactToStoryData,
+      loading: reactToStoryLoading,
+      error: reactToStoryError,
+    },
+  ] = useMutation(ReactToStoryMutation)
+
   const filterQualityStories = (story: Story) =>
     story.coverImage && story.author?.coverImage
 
   useEffect(() => {
-    fetchMore({
+    fetchMoreStories({
       variables: {
         page,
       },
     })
   }, [page])
 
-  if (loading) return null
-  if (error) return <p>Error ...</p>
+  if (storiesLoading) return null
+  if (storiesError) return <p>Error ...</p>
 
   return (
     <div className="flex justify-center sm:mt-8">
@@ -63,6 +77,15 @@ export default function DeckPage() {
 
             if (direction === "up") {
               window.open(`https://hashnode.com/${story.slug}`, "_blank")
+            }
+
+            if (direction === "right") {
+              ReactToStory({
+                variables: {
+                  reaction: "THUMBS_UP",
+                  storyId: story._id,
+                },
+              })
             }
           }}
         >
