@@ -12,7 +12,7 @@ import ReactToStoryMutation from "../graphql/ReactToStory"
 
 export default function DeckPage() {
   const [page, setPage] = useState(0)
-  const [stories, setStories] = useState([])
+  const [stories, setStories] = useState<Story[]>([])
 
   useEffect(() => {
     const apiKey = localStorage.getItem("HASHNODE_API_KEY")
@@ -32,7 +32,8 @@ export default function DeckPage() {
       page,
     },
     onCompleted: (data) => {
-      const qualityStories = data.storiesFeed.filter(filterQualityStories)
+      const qualityStories: Story[] =
+        data.storiesFeed.filter(filterQualityStories)
       if (qualityStories.length > 0) {
         setStories(qualityStories)
       } else {
@@ -41,14 +42,7 @@ export default function DeckPage() {
     },
   })
 
-  const [
-    ReactToStory,
-    {
-      data: reactToStoryData,
-      loading: reactToStoryLoading,
-      error: reactToStoryError,
-    },
-  ] = useMutation(ReactToStoryMutation)
+  const [ReactToStory] = useMutation(ReactToStoryMutation)
 
   const filterQualityStories = (story: Story) =>
     story.coverImage && story.author?.coverImage
