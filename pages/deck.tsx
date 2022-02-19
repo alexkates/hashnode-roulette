@@ -9,6 +9,7 @@ import router from "next/router"
 import { Story } from "../models/Story"
 import GetStoriesFeedByTypeAndPageQuery from "../graphql/GetStoriesFeedByTypeAndPage"
 import ReactToStoryMutation from "../graphql/ReactToStory"
+import FollowUserMutation from "../graphql/FollowerUser"
 
 export default function DeckPage() {
   const [page, setPage] = useState(0)
@@ -28,7 +29,7 @@ export default function DeckPage() {
     fetchMore: fetchMoreStories,
   } = useQuery(GetStoriesFeedByTypeAndPageQuery, {
     variables: {
-      type: "NEW",
+      type: "BEST",
       page,
     },
     onCompleted: (data) => {
@@ -43,6 +44,7 @@ export default function DeckPage() {
   })
 
   const [ReactToStory] = useMutation(ReactToStoryMutation)
+  const [FollowUser] = useMutation(FollowUserMutation)
 
   const filterQualityStories = (story: Story) =>
     story.coverImage && story.author?.coverImage
@@ -78,6 +80,14 @@ export default function DeckPage() {
                 variables: {
                   reaction: "THUMBS_UP",
                   storyId: story._id,
+                },
+              })
+            }
+
+            if (direction === "down") {
+              FollowUser({
+                variables: {
+                  userId: story.author._id,
                 },
               })
             }
