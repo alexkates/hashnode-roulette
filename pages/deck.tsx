@@ -10,6 +10,7 @@ import { Story } from "../models/Story"
 import GetStoriesFeedByTypeAndPageQuery from "../graphql/GetStoriesFeedByTypeAndPage"
 import ReactToStoryMutation from "../graphql/ReactToStory"
 import FollowUserMutation from "../graphql/FollowerUser"
+import Loading from "../components/Loading"
 
 export default function DeckPage() {
   const [page, setPage] = useState(0)
@@ -23,28 +24,29 @@ export default function DeckPage() {
     }
   }, [])
 
-  const {
-    loading: storiesLoading,
-    error: storiesError,
-    fetchMore: fetchMoreStories,
-  } = useQuery(GetStoriesFeedByTypeAndPageQuery, {
-    variables: {
-      type: "BEST",
-      page,
-    },
-    onCompleted: (data) => {
-      const qualityStories: Story[] =
-        data.storiesFeed.filter(filterQualityStories)
-      if (qualityStories.length > 0) {
-        setStories(qualityStories)
-      } else {
-        setPage(page + 1)
-      }
-    },
-  })
+  const { loading: storiesLoading, fetchMore: fetchMoreStories } = useQuery(
+    GetStoriesFeedByTypeAndPageQuery,
+    {
+      variables: {
+        type: "BEST",
+        page,
+      },
+      onCompleted: (data) => {
+        const qualityStories: Story[] =
+          data.storiesFeed.filter(filterQualityStories)
+        if (qualityStories.length > 0) {
+          setStories(qualityStories)
+        } else {
+          setPage(page + 1)
+        }
+      },
+    }
+  )
 
-  const [ReactToStory] = useMutation(ReactToStoryMutation)
-  const [FollowUser] = useMutation(FollowUserMutation)
+  const [ReactToStory, { loading: reactToStoryLoading }] =
+    useMutation(ReactToStoryMutation)
+  const [FollowUser, { loading: followUserLoading }] =
+    useMutation(FollowUserMutation)
 
   const filterQualityStories = (story: Story) =>
     story.coverImage && story.author?.coverImage
@@ -57,8 +59,8 @@ export default function DeckPage() {
     })
   }, [page])
 
-  if (storiesLoading) return null
-  if (storiesError) return <p>Error ...</p>
+  if (storiesLoading || reactToStoryLoading || followUserLoading)
+    return <Loading />
 
   return (
     <div className="flex justify-center sm:mt-8">
