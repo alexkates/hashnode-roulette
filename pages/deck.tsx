@@ -96,13 +96,11 @@ export default function DeckPage() {
           }}
         >
           <div className="flex flex-col justify-center items-center">
-            <img className="w-full h-80" src={story.coverImage} />
+            <img className="w-full h-48 md:h-80" src={story.coverImage} />
             <div className="h-80 border-gray-400 bg-white rounded-b p-6 flex flex-col justify-between leading-normal">
               <div className="mb-8">
-                <div className="text-gray-900 font-bold text-xl pb-2">
-                  {story.title}
-                </div>
-                <p className="text-gray-800 text-base text-ellipsis overflow-ellipsis">
+                <p className="text-gray-900 font-bold pb-2">{story.title}</p>
+                <p className="text-gray-800 text-base text-ellipsis">
                   {story.brief}
                 </p>
               </div>
