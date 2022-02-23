@@ -38,7 +38,7 @@ export default function Settings() {
           className="w-8 h-8 mr-2 cursor-pointer"
         />
         <input
-          type="text"
+          type="password"
           className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
           placeholder="Enter your Hashnode API key"
           onChange={(e) => setApiKey(e.target.value)}
@@ -47,14 +47,15 @@ export default function Settings() {
       </div>
 
       <div className="flex items-center mt-2">
-        <p className="font-light italic block">
-          Hashnode Roulette never saves your API Key.
+        <p className="font-extralight italic block text-sm">
+          Hashnode Roulette only saves your API key to the browser's local
+          storage.
         </p>
       </div>
       <input
         type="submit"
         value="Submit"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mt-4"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg mt-8"
       />
     </form>
   )

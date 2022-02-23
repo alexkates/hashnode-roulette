@@ -27,26 +27,10 @@ export default function NavbarMenu() {
         <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="px-1 py-1">
             <Menu.Item>
-              <NavbarMenuItem href="/settings">
-                <a
-                  className={
-                    "text-gray-900 flex rounded-md items-center w-full px-2 py-2 text-sm"
-                  }
-                >
-                  Settings
-                </a>
-              </NavbarMenuItem>
+              <NavbarMenuItem href="/settings">Settings</NavbarMenuItem>
             </Menu.Item>
             <Menu.Item>
-              <NavbarMenuItem href="/api/auth/signout">
-                <a
-                  className={
-                    "text-gray-900 flex rounded-md items-center w-full px-2 py-2 text-sm"
-                  }
-                >
-                  Sign out
-                </a>
-              </NavbarMenuItem>
+              <NavbarMenuItem href="/api/auth/signout">Sign out</NavbarMenuItem>
             </Menu.Item>
           </div>
         </Menu.Items>
