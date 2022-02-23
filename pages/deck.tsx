@@ -12,8 +12,10 @@ import ReactToStoryMutation from "../graphql/ReactToStory"
 import FollowUserMutation from "../graphql/FollowerUser"
 import Loading from "../components/Loading"
 
+const getRandomPage = () => Math.floor(Math.random() * 100)
+
 export default function DeckPage() {
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(() => getRandomPage())
   const [stories, setStories] = useState<Story[]>([])
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export default function DeckPage() {
         if (qualityStories.length > 0) {
           setStories(qualityStories)
         } else {
-          setPage(page + 1)
+          setPage(getRandomPage())
         }
       },
     }
@@ -67,7 +69,7 @@ export default function DeckPage() {
           className="absolute cursor-pointer max-w-lg rounded shadow-lg"
           onSwipe={(direction: string) => {
             if (index === 0) {
-              setPage(page + 1)
+              setPage(getRandomPage())
             }
 
             if (direction === "up") {
