@@ -43,10 +43,8 @@ export default function DeckPage() {
     }
   )
 
-  const [ReactToStory, { loading: reactToStoryLoading }] =
-    useMutation(ReactToStoryMutation)
-  const [FollowUser, { loading: followUserLoading }] =
-    useMutation(FollowUserMutation)
+  const [ReactToStory] = useMutation(ReactToStoryMutation)
+  const [FollowUser] = useMutation(FollowUserMutation)
 
   const filterQualityStories = (story: Story) =>
     story.coverImage && story.author?.coverImage
@@ -59,8 +57,7 @@ export default function DeckPage() {
     })
   }, [page])
 
-  if (storiesLoading || reactToStoryLoading || followUserLoading)
-    return <Loading />
+  if (storiesLoading) return <Loading />
 
   return (
     <div className="flex justify-center sm:mt-8">
