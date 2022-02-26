@@ -11,6 +11,7 @@ import GetStoriesFeedByTypeAndPageQuery from "../graphql/GetStoriesFeedByTypeAnd
 import ReactToStoryMutation from "../graphql/ReactToStory"
 import FollowUserMutation from "../graphql/FollowerUser"
 import Loading from "../components/Loading"
+import ControlsHelp from "../components/ControlsHelp"
 
 const getRandomPage = () => Math.floor(Math.random() * 100)
 
@@ -66,42 +67,15 @@ export default function DeckPage() {
       {stories.map((story: Story, index: number) => (
         <TinderCard
           key={index}
-          className="absolute cursor-pointer max-w-lg rounded shadow-lg"
-          onSwipe={(direction: string) => {
-            if (index === 0) {
-              setPage(getRandomPage())
-            }
-
-            if (direction === "up") {
-              window.open(`https://hashnode.com/${story.slug}`, "_blank")
-            }
-
-            if (direction === "right") {
-              ReactToStory({
-                variables: {
-                  reaction: "THUMBS_UP",
-                  storyId: story._id,
-                },
-              })
-            }
-
-            if (direction === "down") {
-              FollowUser({
-                variables: {
-                  userId: story.author._id,
-                },
-              })
-            }
-          }}
+          className="absolute cursor-pointer max-w-2xl rounded shadow-lg"
+          onSwipe={handleCardSwipe(index, story)}
         >
-          <div className="flex flex-col justify-center items-center">
-            <img className="w-full h-48 md:h-80" src={story.coverImage} />
-            <div className="h-80 border-gray-400 bg-white rounded-b p-6 flex flex-col justify-between leading-normal">
+          <div className="flex flex-col">
+            <img className="w-full h-80" src={story.coverImage} />
+            <div className="border-gray-400 bg-white rounded-b p-6">
               <div className="mb-4">
-                <p className="text-gray-900 font-bold pb-2">{story.title}</p>
-                <p className="text-gray-800 text-base text-ellipsis">
-                  {story.brief}
-                </p>
+                <p className="text-gray-900 font-bold mb-2">{story.title}</p>
+                <p className="text-gray-800">{story.brief}</p>
               </div>
               <div className="flex items-center">
                 <img
@@ -119,8 +93,41 @@ export default function DeckPage() {
           </div>
         </TinderCard>
       ))}
+      <ControlsHelp />
     </div>
   )
+
+  function handleCardSwipe(
+    index: number,
+    story: Story
+  ): ((direction: "up" | "right" | "left" | "down") => void) | undefined {
+    return (direction: string) => {
+      if (index === 0) {
+        setPage(getRandomPage())
+      }
+
+      if (direction === "up") {
+        window.open(`https://hashnode.com/${story.slug}`, "_blank")
+      }
+
+      if (direction === "right") {
+        ReactToStory({
+          variables: {
+            reaction: "THUMBS_UP",
+            storyId: story._id,
+          },
+        })
+      }
+
+      if (direction === "down") {
+        FollowUser({
+          variables: {
+            userId: story.author._id,
+          },
+        })
+      }
+    }
+  }
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
