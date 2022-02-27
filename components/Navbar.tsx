@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { useSession } from "next-auth/react"
-import { Menu, Transition } from "@headlessui/react"
 import NavbarMenu from "./NavbarMenu"
 
 export default () => {
@@ -15,7 +14,7 @@ const Navbar = () => {
   const session = useSession()
 
   return (
-    <div className="flex items-center justify-between p-4">
+    <div className="flex items-center justify-between p-8">
       <Link href="/">
         <a className="text-xl font-bold no-underline hover:text-gray-300">
           Hashnode Roulette

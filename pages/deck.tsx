@@ -13,7 +13,7 @@ import FollowUserMutation from "../graphql/FollowerUser"
 import Loading from "../components/Loading"
 import ControlsHelp from "../components/ControlsHelp"
 
-const getRandomPage = () => Math.floor(Math.random() * 100)
+const getRandomPage = () => Math.floor(Math.random() * 15)
 
 export default function DeckPage() {
   const [page, setPage] = useState(() => getRandomPage())
@@ -71,11 +71,11 @@ export default function DeckPage() {
           onSwipe={handleCardSwipe(index, story)}
         >
           <div className="flex flex-col">
-            <img className="w-full h-80" src={story.coverImage} />
+            <img className="w-full h-72" src={story.coverImage} />
             <div className="border-gray-400 bg-white rounded-b p-6">
               <div className="mb-4">
                 <p className="text-gray-900 font-bold mb-2">{story.title}</p>
-                <p className="text-gray-800">{story.brief}</p>
+                <p className="text-gray-800">{story.brief.slice(0, 200)}...</p>
               </div>
               <div className="flex items-center">
                 <img
