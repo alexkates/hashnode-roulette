@@ -11,7 +11,16 @@ import GetStoriesFeedByTypeAndPageQuery from "../graphql/GetStoriesFeedByTypeAnd
 import ReactToStoryMutation from "../graphql/ReactToStory"
 import FollowUserMutation from "../graphql/FollowerUser"
 import Loading from "../components/Loading"
-import ControlsHelp from "../components/ControlsHelp"
+import {
+  BanIcon,
+  ArrowSmLeftIcon,
+  BookOpenIcon,
+  ArrowSmUpIcon,
+  UserAddIcon,
+  ArrowSmDownIcon,
+  ThumbUpIcon,
+  ArrowSmRightIcon,
+} from "@heroicons/react/solid"
 
 const getRandomPage = () => Math.floor(Math.random() * 15)
 
@@ -66,6 +75,8 @@ export default function DeckPage() {
     <div className="flex justify-center sm:mt-8">
       {stories.map((story: Story, index: number) => (
         <TinderCard
+          swipeThreshold={0.1}
+          flickOnSwipe={true}
           key={index}
           className="absolute cursor-pointer max-w-2xl rounded shadow-lg"
           onSwipe={handleCardSwipe(index, story)}
@@ -93,7 +104,26 @@ export default function DeckPage() {
           </div>
         </TinderCard>
       ))}
-      <ControlsHelp />
+      <section className="container mx-auto fixed inset-x-0 bottom-0">
+        <div className="flex justify-center m-4 w-auto">
+          <div className="flex flex-col px-4">
+            <BanIcon className="w-12 h-12 text-red-500" />
+            <ArrowSmLeftIcon className="w-12 h-12" />
+          </div>
+          <div className="flex flex-col px-4">
+            <BookOpenIcon className="w-12 h-12 text-yellow-500" />
+            <ArrowSmUpIcon className="w-12 h-12" />
+          </div>
+          <div className="flex flex-col px-4">
+            <UserAddIcon className="w-12 h-12 text-green-500" />
+            <ArrowSmDownIcon className="w-12 h-12" />
+          </div>
+          <div className="flex flex-col px-4">
+            <ThumbUpIcon className="w-12 h-12 text-cyan-500" />
+            <ArrowSmRightIcon className="w-12 h-12" />
+          </div>
+        </div>
+      </section>
     </div>
   )
 
